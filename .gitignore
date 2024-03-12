@@ -1,0 +1,59 @@
+# Ignore object files and executables
+*.o
+*.ko
+*.mod.*
+*.symvers
+*.order
+*.markers
+*.tmp_versions
+*.ko.*
+*.cmd
+.tmp_versions/
+Module.symvers
+
+# Ignore generated kernel headers
+include/generated/
+include/config/
+
+# Ignore compiled kernel
+vmlinux
+System.map
+
+# Ignore editor backup files
+*~
+\#*\#
+*.swp
+
+# Ignore build output directories
+build/
+output/
+
+# Ignore any logs or temp files
+*.log
+*.bak
+*.tmp
+*.bak.*
+*.orig
+*.orig.*
+*.rej
+
+# Ignore kernel build related files
+Module.markers
+Module.symvers
+modules.order
+
+# Ignore generated documentation
+Documentation/output/
+
+# Ignore kernel configuration
+.config
+.config.old
+
+# Ignore generated tags file
+tags
+
+# Ignore various version control system directories
+.git/
+.svn/
+CVS/
+.hg/
