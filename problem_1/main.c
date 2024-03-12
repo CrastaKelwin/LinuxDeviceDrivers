@@ -430,6 +430,24 @@ long scull_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 		return -EFAULT;
 
 	switch(cmd) {
+		case SCULL_IOCSORT:
+		struct scull_dev *dev = filp->private_data;
+		if(!dev||!dev->data||!dev->data->data||!dev->data->data[0])
+			break;
+		for (int i = 0; i < scull_quantum-1; i++)
+		{
+			for (int j = 0; j < scull_quantum-i-1; j++)
+			{
+				if(*((char *)(dev->data->data[0]+j))>*((char *)(dev->data->data[0]+j+1)))
+				{
+					char temp = *((char *)(dev->data->data[0]+j));
+					*((char *)dev->data->data[0]+j) = *((char *)(dev->data->data[0]+j+1));
+					*((char *)(dev->data->data[0]+j+1)) = temp;
+				}
+			}
+			
+		}
+		break;
 	  case SCULL_IOCRESET:
 		scull_quantum = SCULL_QUANTUM;
 		scull_qset = SCULL_QSET;
