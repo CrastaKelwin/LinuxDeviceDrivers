@@ -1,6 +1,8 @@
 # Ignore object files and executables
 *.o
+*.d
 *.ko
+*.mod
 *.mod.*
 *.symvers
 *.order
