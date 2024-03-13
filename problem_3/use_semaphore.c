@@ -7,7 +7,7 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/ioctl.h> //_io(), _iow(), _ior() 
-//#include "use_scull.h"
+#include "use_scull.h"
 #include <string.h>
 
 int fd;
@@ -43,7 +43,7 @@ int main ( )
                         //printf (" Enter the message to device: ");
                         //scanf (" %[^\n]", write_buf);
                         //write(fd,write_buf, strlen(write_buf)+1);
-			ioctl(fd,SCULL_IOCSQUANTUM,k); 
+			ioctl(fd,SCULL_IOCSWAP); 
                         // // ioctl(fd,SCULL_IOCXQUANTUM, &l); //get quantum
                         // printf("Earlier value = %d\n", l);
                         // k = ioctl(fd,SCULL_IOCQQUANTUM); //SCULL_IOCGQUANTUM
