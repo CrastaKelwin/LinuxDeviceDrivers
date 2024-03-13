@@ -78,9 +78,13 @@ int scull_read_procmem(struct seq_file *s, void *v)
 	for (i = 0; i < scull_nr_devs && s->count <= limit; i++) {
 		struct scull_dev *d = &scull_devices[i];
 		
+		int quantum = d->quantum, qset = d->qset;
+		int itemsize = quantum * qset; /* how many bytes in the listitem */
+		int s_pos, q_pos, rest;
+		
 		if (mutex_lock_interruptible(&d->mutex))
 			return -ERESTARTSYS;
-		seq_printf(s, "\nDevice %i: ",i);
+		seq_printf(s, "\nDevice last50characters %i\n: ",i);
 		 if(!d)
             goto out;
 
@@ -89,22 +93,24 @@ int scull_read_procmem(struct seq_file *s, void *v)
 
 		if (!(d->data->data))
 	        goto out;
+	        
+		rest = d->size % itemsize;
+		s_pos = rest / quantum; 
+		q_pos = rest % quantum;
 
-        if (!(d->data->data[0]))
-          	goto out;
-
-		for(j=0; j<scull_quantum-1;j++)
+		if (!(d->data->data[s_pos]))
+        	  goto out;
+        	
+        	if(q_pos<50)
+        	  k=q_pos;
+       
+             	else
+             	   k=50;
+             	
+		for(j=0; j<k;j++)
 		{
-		//seq_printf(s, "%c",*((char *)(d->data->data[0]+j)));
-			for(k=j+1; k<=scull_quantum; k++)
-			{
-				if((*(char*)(d->data->data[0]+k)) > (*(char*)(d->data->data[0]+j)))
-				{
-					temp = (*(char*)(d->data->data[0]+k));
-					(*(char*)(d->data->data[0]+k)) = (*(char*)(d->data->data[0]+j));
-					(*(char*)(d->data->data[0]+j)) = temp;
-				}
-			}
+		seq_printf(s, "%c",*((char *)(d->data->data[s_pos]+q_pos-k+j)));
+			
         }
 out:		mutex_unlock(&scull_devices[i].mutex);
 	}
