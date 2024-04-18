@@ -43,7 +43,7 @@ int main ( )
                         //printf (" Enter the message to device: ");
                         //scanf (" %[^\n]", write_buf);
                         //write(fd,write_buf, strlen(write_buf)+1);
-			ioctl(fd,SCULL_IOCSQUANTUM,k); 
+			// ioctl(fd,SCULL_IOCSQUANTUM,k); 
                         // // ioctl(fd,SCULL_IOCXQUANTUM, &l); //get quantum
                         // printf("Earlier value = %d\n", l);
                         // k = ioctl(fd,SCULL_IOCQQUANTUM); //SCULL_IOCGQUANTUM
@@ -54,7 +54,7 @@ int main ( )
                         break;
 
                 case 'r':
-                        lseek(fd, 0L, SEEK_SET);
+                        lseek(fd, 3L, SEEK_SET);
                         read(fd, read_buf, sizeof(read_buf));
         	           printf ("The message from the device is : %s\n", read_buf);
 			// l = ioctl(fd,SCULL_IOCHQUANTUM, 1500);

@@ -539,11 +539,11 @@ loff_t scull_llseek(struct file *filp, loff_t off, int whence)
 
 	switch(whence) {
 	  case 0: /* SEEK_SET */
-		newpos = off;
+		newpos = off * SCULL_QUANTUM;
 		break;
 
 	  case 1: /* SEEK_CUR */
-		newpos = filp->f_pos + off;
+		newpos = filp->f_pos + (off * SCULL_QUANTUM);
 		break;
 
 	  case 2: /* SEEK_END */
