@@ -176,6 +176,8 @@ long scull_ioctl(struct file *filp, unsigned int cmd, unsigned long arg);
 #define SCULL_P_IOCQSIZE _IO(SCULL_IOC_MAGIC,   14)
 /* ... more to come */
 
-#define SCULL_IOC_MAXNR 14
+#define SCULL_P_IOCEMPTY _IO(SCULL_IOC_MAGIC,   15)
+
+#define SCULL_IOC_MAXNR 15
 
 #endif /* _SCULL_H_ */

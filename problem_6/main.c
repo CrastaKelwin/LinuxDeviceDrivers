@@ -430,6 +430,12 @@ long scull_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 		return -EFAULT;
 
 	switch(cmd) {
+		case SCULL_P_IOCEMPTY:
+    		struct scull_dev *dev = filp->private_data;
+            err = scull_trim(dev);
+            if (err)
+                return -EFAULT;
+		break;
 	  case SCULL_IOCRESET:
 		scull_quantum = SCULL_QUANTUM;
 		scull_qset = SCULL_QSET;
