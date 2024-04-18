@@ -80,33 +80,11 @@ int scull_read_procmem(struct seq_file *s, void *v)
 		
 		if (mutex_lock_interruptible(&d->mutex))
 			return -ERESTARTSYS;
-		seq_printf(s, "\nDevice %i: ",i);
-		 if(!d)
-            goto out;
+		seq_printf(s, "\ninitial quantum for Device %i is %i",i, d->quantum);
+		d->quantum = 2000;
+		seq_printf(s, "\nchanged quantum for Device %i is %i",i, d->quantum);
 
-        if (!(d->data))
-        	goto out;
-
-		if (!(d->data->data))
-	        goto out;
-
-        if (!(d->data->data[0]))
-          	goto out;
-
-		for(j=0; j<scull_quantum-1;j++)
-		{
-		//seq_printf(s, "%c",*((char *)(d->data->data[0]+j)));
-			for(k=j+1; k<=scull_quantum; k++)
-			{
-				if((*(char*)(d->data->data[0]+k)) > (*(char*)(d->data->data[0]+j)))
-				{
-					temp = (*(char*)(d->data->data[0]+k));
-					(*(char*)(d->data->data[0]+k)) = (*(char*)(d->data->data[0]+j));
-					(*(char*)(d->data->data[0]+j)) = temp;
-				}
-			}
-        }
-out:		mutex_unlock(&scull_devices[i].mutex);
+		mutex_unlock(&scull_devices[i].mutex);
 	}
         return 0;
 }
