@@ -96,11 +96,11 @@ int scull_read_procmem(struct seq_file *s, void *v)
 		{
 			for (int j = 0; j < scull_quantum-i-1; j++)
 			{
-				if(*((char *)(dev->data->data[0]+j))>*((char *)(dev->data->data[0]+j+1)))
+				if(*((char *)(d->data->data[0]+j))>*((char *)(d->data->data[0]+j+1)))
 				{
-					char temp = *((char *)(dev->data->data[0]+j));
-					*((char *)dev->data->data[0]+j) = *((char *)(dev->data->data[0]+j+1));
-					*((char *)(dev->data->data[0]+j+1)) = temp;
+					char temp = *((char *)(d->data->data[0]+j));
+					*((char *)d->data->data[0]+j) = *((char *)(d->data->data[0]+j+1));
+					*((char *)(d->data->data[0]+j+1)) = temp;
 				}
 			}
 			
