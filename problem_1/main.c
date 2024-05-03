@@ -85,26 +85,27 @@ int scull_read_procmem(struct seq_file *s, void *v)
             goto out;
 
         if (!(d->data))
-        	goto out;
+			goto out;
 
 		if (!(d->data->data))
 	        goto out;
 
         if (!(d->data->data[0]))
-          	goto out;
-		for (int i = 0; i < scull_quantum-1; i++)
+			goto out;
+
+		for(j=0; j<scull_quantum-1;j++)
 		{
-			for (int j = 0; j < scull_quantum-i-1; j++)
+		//seq_printf(s, "%c",*((char *)(d->data->data[0]+j)));
+			for(k=j+1; k<=scull_quantum; k++)
 			{
-				if(*((char *)(d->data->data[0]+j))>*((char *)(d->data->data[0]+j+1)))
+				if((*(char*)(d->data->data[0]+k)) > (*(char*)(d->data->data[0]+j)))
 				{
-					char temp = *((char *)(d->data->data[0]+j));
-					*((char *)d->data->data[0]+j) = *((char *)(d->data->data[0]+j+1));
-					*((char *)(d->data->data[0]+j+1)) = temp;
+					temp = (*(char*)(d->data->data[0]+k));
+					(*(char*)(d->data->data[0]+k)) = (*(char*)(d->data->data[0]+j));
+					(*(char*)(d->data->data[0]+j)) = temp;
 				}
 			}
-			
-		}
+        }
 out:		mutex_unlock(&scull_devices[i].mutex);
 	}
         return 0;
